@@ -36,6 +36,38 @@ assert cf
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
+def newCatalog():
+    """
+    Inicializa el catálogo de libros. Crea una lista vacia para guardar
+    todos los libros, adicionalmente, crea una lista vacia para los autores,
+    una lista vacia para los generos y una lista vacia para la asociación
+    generos y libros. Retorna el catalogo inicializado.
+    """
+    catalog = {'artworks': None, "Medium" : None}
+    catalog['artworks'] = lt.newList('ARRAY_LIST', cmpfunction=compareartworks)
+    catalog['Medium'] = mp.newMap(10000,
+                                   maptype='CHAINING',
+                                   loadfactor=4.0,
+                                   comparefunction=compareartworksmedium)
+
+
+def compareartworks(artworkname1,artwork):
+    if artworkname1['ObjectID'] > artwork['ObjectID']:
+        return 1
+    elif artworkname1['ObjectID'] == artwork['ObjectID']:
+        return 0
+    else:
+        return -1
+
+
+def compareartworksmedium(artwork1,artwork2):
+    if artwork1['Medium'] > artwork2['Medium']:
+        return 1
+    elif artwork1['Medium'] == artwork2['Medium']:
+        return 0
+    else:
+        return -1
+
 
 # Construccion de modelos
 
