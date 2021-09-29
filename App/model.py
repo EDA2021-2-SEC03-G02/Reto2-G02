@@ -44,11 +44,21 @@ def newCatalog():
     generos y libros. Retorna el catalogo inicializado.
     """
     catalog = {'artworks': None, "Medium" : None}
+    
     catalog['artworks'] = lt.newList('ARRAY_LIST', cmpfunction=compareartworks)
     catalog['Medium'] = mp.newMap(10000,
                                    maptype='CHAINING',
                                    loadfactor=4.0,
                                    comparefunction=compareartworksmedium)
+
+
+
+def addArtwork(catalog, artwork):
+    # Se adiciona el libro a la lista de libros
+    lt.addLast(catalog['artworks'], artwork)
+    #Se añade al mapa las obras con los medios como llaves
+    mp.put(catalog["Medium"], artwork["Medium"], artwork)
+
 
 
 def compareartworks(artworkname1,artwork):
@@ -67,6 +77,9 @@ def compareartworksmedium(artwork1,artwork2):
         return 0
     else:
         return -1
+
+def TopViejosPorMedium(catalog, medium):
+    None
 
 
 # Construccion de modelos
