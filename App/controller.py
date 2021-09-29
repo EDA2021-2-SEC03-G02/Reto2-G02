@@ -49,6 +49,8 @@ def loadArtworks(catalog):
     for artwork in input_file:
         model.addArtwork(catalog, artwork)
 
+def TopViejosPorMedium(catalog, medium):
+    return model.TopViejosPorMedium(catalog,medium)
 # Inicialización del Catálogo de libros
 
 # Funciones para la carga de datos

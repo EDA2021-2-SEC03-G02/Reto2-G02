@@ -46,6 +46,7 @@ def newCatalog():
     catalog = {'artworks': None, "Medium" : None}
     
     catalog['artworks'] = lt.newList('ARRAY_LIST', cmpfunction=compareartworks)
+    #Paso 1: Modifique su catálogo para que al cargar las obras en una lista cree un índice por medio utilizando la librería Maps.py de DISClib.
     catalog['Medium'] = mp.newMap(10000,
                                    maptype='CHAINING',
                                    loadfactor=4.0,
@@ -58,6 +59,7 @@ def addArtwork(catalog, artwork):
     lt.addLast(catalog['artworks'], artwork)
     #Se añade al mapa las obras con los medios como llaves
     mp.put(catalog["Medium"], artwork["Medium"], artwork)
+    
 
 
 
@@ -79,7 +81,16 @@ def compareartworksmedium(artwork1,artwork2):
         return -1
 
 def TopViejosPorMedium(catalog, medium):
-    None
+    mapa = catalog["Medium"]
+    print(mp.get(mapa, "Drypoint"))
+    pareja = mp.get(mapa, medium)
+    lista = me.getValue(pareja)
+    print(lista)
+
+    """if llave == medium:
+        addLast(lista, obra)
+        ms.fecha(lista)
+        top(n)"""
 
 
 # Construccion de modelos

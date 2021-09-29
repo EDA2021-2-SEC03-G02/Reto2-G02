@@ -53,7 +53,10 @@ while True:
         controller.loadData(catalog)
 
     elif int(inputs[0]) == 2:
-        pass
+        medium = input("Indique que medio desear conocer")
+        n = int(input("Digite la cantidad de obras más antiguas que desea conocer"))
+        controller.TopViejosPorMedium(catalog, medium)
+        
 
     else:
         sys.exit(0)
