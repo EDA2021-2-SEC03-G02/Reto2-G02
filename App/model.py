@@ -84,10 +84,9 @@ def addArtwork(catalog, artwork):
     # Se adiciona el libro a la lista de libros
     lt.addLast(catalog['artworks'], artwork)
     AddNacionalidadesObras(catalog, artwork)
-    if artwork["Medium"] != "":
-        #print(artwork["Medium"])
-        mp.put(catalog["Medium"], artwork["Medium"], artwork)
-    addArtworkMedium(catalog, artwork)  
+    addArtworkMedium(catalog, artwork)
+    #print(artwork["Medium"])
+    #mp.put(catalog["Medium"], artwork["Medium"], artwork)
 
 def addArtist(catalog, artist):
     lt.addLast(catalog['artists'], artist)
@@ -597,32 +596,37 @@ def addArtworkMedium(catalog, artwork):
         mediums = catalog["Medium"]
         if (artwork["Medium"]!=""):
             medioArtwork = artwork["Medium"]
+        else:
+            pass
         existmedio = mp.contains(mediums, medioArtwork)
         if existmedio:
             entry = mp.get(mediums, medioArtwork)
             medium = me.getValue(entry)
+            lt.addLast(medium, artwork)
         else:
-            medium = newMedium(medioArtwork)
+            medium = lt.newList(datastructure="ARRAY_LIST")
+            lt.addLast(medium, artwork)
             mp.put(mediums, medioArtwork, medium)
-        lt.addLast(medium["artworks"], artwork)
-        print(medium["artworks"])
+            #medium = newMedium(medioArtwork)
+            #mp.put(mediums, medioArtwork, medium)
+        
+        #lt.addLast(medium["artworks"], artwork)
+        #print(medium["artworks"])
     except Exception:
         return None
 
-def newMedium(medioArtwork):
+"""def newMedium(medioArtwork):
     entry = {"Medium": "", "artworks": None}
     entry["Medium"] = medioArtwork
-    entry["artworks"] = lt.newList("SINGLE-LINKED", compareartworksmedium)
-    #print(entry)
-    return entry
+    entry["artworks"] = lt.newList("SINGLE_LINKED", compareartworksmedium)
+    return entry"""
         
 
 def ObrasPorMedium(catalog, medium):
     medium = mp.get(catalog["Medium"], medium)
     if medium:
-        pareja = me.getValue(medium)
-        #print(pareja)
-        #print(pareja["Artworks"])
+        print(me.getValue(medium))
+        return me.getValue(medium)
     return None
 
 
