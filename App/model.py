@@ -625,9 +625,19 @@ def addArtworkMedium(catalog, artwork):
 def ObrasPorMedium(catalog, medium):
     medium = mp.get(catalog["Medium"], medium)
     if medium:
-        print(me.getValue(medium))
-        return me.getValue(medium)
+        return me.getValue(medium)["elements"]
     return None
+
+def nObrasMasAntiguas(lista, n):
+    SinVacio = lt.newList(cmpfunction=compareartworks)
+    lista_ord = ms.sort(lista, compareDate)
+    print(lista_ord)
+    for obra in lt.iterator(lista_ord):
+        if obra["Date"] != "":
+            lt.addLast(SinVacio, obra)
+    top_n_antiguas = lt.subList(SinVacio, 1, n)
+    return top_n_antiguas
+
 
 
 # Construccion de modelos

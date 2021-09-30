@@ -141,8 +141,13 @@ def ordenarpaises(catalog):
     return resultado
 
 
+#lab5
+
 def ObrasPorMedium(catalog, medium):
     return model.ObrasPorMedium(catalog,medium)
+
+def nObrasMasAntiguas(lista, n):
+    return model.nObrasMasAntiguas(lista, n)
 
 
 # Inicialización del Catálogo de libros

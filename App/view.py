@@ -147,6 +147,7 @@ while True:
         print("Los últimos 3 artistas son: ")
         a=lt.newList()
         a=Last3Artists(catalog)
+        print(a)
         print("Las últimas 3 obras son: ")
         a=lt.newList()
         a1=Last3Artworks(catalog)
@@ -235,7 +236,8 @@ while True:
         medium = input("Indique que medio desear conocer")
         n = int(input("Digite la cantidad de obras más antiguas que desea conocer"))
         lista = controller.ObrasPorMedium(catalog, medium)
-        print(lista)
+        n_mas_antiguas = controller.nObrasMasAntiguas(lista,n)
+        #print(n_mas_antiguas)
     else:
         sys.exit(0)
 sys.exit(0)
