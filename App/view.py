@@ -233,11 +233,14 @@ while True:
         elapsed_time_mseg = (stop_time - start_time)*1000
         print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
     elif int(inputs[0] )== 7:
-        medium = input("Indique que medio desear conocer")
-        n = int(input("Digite la cantidad de obras más antiguas que desea conocer"))
+        medium = input("Indique que medio desear conocer: ")
+        n = int(input("Digite la cantidad de obras más antiguas que desea conocer: "))
         lista = controller.ObrasPorMedium(catalog, medium)
+        print("Las obras que fueron creadas con ese medio/técnica son: ")
+        print(lista)
         n_mas_antiguas = controller.nObrasMasAntiguas(lista,n)
-        #print(n_mas_antiguas)
+        print("Las " +str(n)+ " obras m´sa antiguas creadas con el medio/técnica "+medium+" son:")
+        print(n_mas_antiguas)
     else:
         sys.exit(0)
 sys.exit(0)
