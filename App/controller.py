@@ -47,6 +47,7 @@ def loadArtworks(catalog):
     worksfile = cf.data_dir + 'MoMA/Artworks-utf8-small.csv'
     input_file = csv.DictReader(open(worksfile, encoding='utf-8'))
     for artwork in input_file:
+        #print(type(artwork))
         model.addArtwork(catalog, artwork)
 
 def TopViejosPorMedium(catalog, medium):
