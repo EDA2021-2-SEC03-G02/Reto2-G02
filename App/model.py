@@ -594,6 +594,18 @@ def ArtistaEnObra(catalog, obra):
 def addArtworkMedium(catalog, artwork):
     try:
         mediums = catalog["Medium"]
+        if artwork["Medium"] != "":
+            medio = artwork["Medium"]
+            existMedium = mp.contains(mediums, medio)
+            if existMedium:
+                None
+
+    except Exception:
+        return None
+
+"""def addArtworkMedium(catalog, artwork):
+    try:
+        mediums = catalog["Medium"]
         if (artwork["Medium"]!=""):
             medioArtwork = artwork["Medium"]
         else:
@@ -613,7 +625,7 @@ def addArtworkMedium(catalog, artwork):
         #lt.addLast(medium["artworks"], artwork)
         #print(medium["artworks"])
     except Exception:
-        return None
+        return None"""
 
 """def newMedium(medioArtwork):
     entry = {"Medium": "", "artworks": None}
