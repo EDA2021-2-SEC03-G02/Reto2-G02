@@ -652,7 +652,7 @@ def ObrasPorMedium(catalog, medium):
     return None
 
 def nObrasMasAntiguas(lista, n):
-    SinVacio = lt.newList(cmpfunction=compareartworks)
+    SinVacio = lt.newList(datastructure="ARRAY_LIST", cmpfunction=compareartworks)
     lista_ord = ms.sort(lista, compareDate)
     for obra in lt.iterator(lista_ord):
         if obra["Date"] != "":
