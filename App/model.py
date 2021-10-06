@@ -598,10 +598,21 @@ def addArtworkMedium(catalog, artwork):
             medio = artwork["Medium"]
             existMedium = mp.contains(mediums, medio)
             if existMedium:
-                None
+                entry = mp.get(mediums, medio)
+                dicc_medio = me.getValue(entry)
+            else:
+                dicc_medio = newMedio(medio)
+                mp.put(mediums, medio, dicc_medio)
+            lt.addLast(dicc_medio["obras"], artwork)
 
     except Exception:
         return None
+
+def newMedio(medio):
+    dicc = {"medio": "", "obras": None}
+    dicc["medio"] = medio
+    dicc["obras"] = lt.newList('ARRAY_LIST', cmpfunction=compareartworks)
+    return dicc
 
 """def addArtworkMedium(catalog, artwork):
     try:
