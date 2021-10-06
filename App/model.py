@@ -648,13 +648,12 @@ def newMedio(medio):
 def ObrasPorMedium(catalog, medium):
     medium = mp.get(catalog["Medium"], medium)
     if medium:
-        return me.getValue(medium)["elements"]
+        return me.getValue(medium)["obras"]
     return None
 
 def nObrasMasAntiguas(lista, n):
     SinVacio = lt.newList(cmpfunction=compareartworks)
     lista_ord = ms.sort(lista, compareDate)
-    print(lista_ord)
     for obra in lt.iterator(lista_ord):
         if obra["Date"] != "":
             lt.addLast(SinVacio, obra)
