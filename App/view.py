@@ -237,7 +237,7 @@ while True:
         n = int(input("Digite la cantidad de obras más antiguas que desea conocer: "))
         lista = controller.ObrasPorMedium(catalog, medium)
         print("Las obras que fueron creadas con ese medio/técnica son: ")
-        print(lista)
+        print(type(lista))
         n_mas_antiguas = controller.nObrasMasAntiguas(lista,n)
         print("Las " +str(n)+ " obras m´sa antiguas creadas con el medio/técnica "+medium+" son:")
         print(n_mas_antiguas)
