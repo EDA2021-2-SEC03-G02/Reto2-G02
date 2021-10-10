@@ -81,7 +81,7 @@ def newCatalog():
                                    maptype='CHAINING',
                                    loadfactor=4.0,
                                    comparefunction=compareartworksConstituentIDMAP)
-    catalog["artistMAP"] = mp.newMap(10000,
+    catalog["DisplayName"] = mp.newMap(10000,
                                    maptype='CHAINING',
                                    loadfactor=4.0,
                                    comparefunction=compareartistMAP)
@@ -98,8 +98,8 @@ def addArtwork(catalog, artwork):
 
 def addArtist(catalog, artist):
     lt.addLast(catalog['artists'], artist)
-    addArtistMAP(catalog, artist)
-
+    mp.put(catalog["DisplayName"], artist["DisplayName"], artist["ConstituentID"])
+    
 
 
 def getLast3Artists(catalog):
@@ -143,28 +143,6 @@ def newID(id):
     dicc["id"] = id
     dicc["obras"] = lt.newList('ARRAY_LIST', cmpfunction=compareartworks)
     return dicc
-
-def addArtistMAP(catalog, artist):
-    try:
-        artistas = catalog["artistMAP"]
-        existArtist = mp.contains(artistas, artist)
-        if existArtist:
-            entry = mp.get(artistas, artist)
-            dicc_artistas = me.getValue(entry)
-        else:
-            dicc_artistas = newArtist(artist)    
-            mp.put(artistas, artist, dicc_artistas)
-        lt.addLast(dicc_artistas["info"], artist)
-    except Exception:
-        return None
-
-def newArtist(name):
-    author = {'name': "",
-              "info": None}
-    author['name'] = name
-    author['info'] = lt.newList('ARRAY_LIST', cmpfunction=compareartist)
-    return author
-    
 
 # Funciones para creacion de datos
 
