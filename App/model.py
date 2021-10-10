@@ -89,8 +89,8 @@ def addArtwork(catalog, artwork):
     lt.addLast(catalog['artworks'], artwork)
     AddNacionalidadesObras(catalog, artwork)
     addArtworkMedium(catalog, artwork)
-    #print(artwork["Medium"])
-    #mp.put(catalog["Medium"], artwork["Medium"], artwork)
+    addArtworkConstituentID(catalog, artwork)
+    
 
 def addArtist(catalog, artist):
     lt.addLast(catalog['artists'], artist)
@@ -130,8 +130,6 @@ def addArtworkConstituentID(catalog, artwork):
                 mp.put(ids, id, dicc_ids)
             lt.addLast(dicc_ids["obras"], artwork)    
             
-
-
     except Exception:
         return None
 
