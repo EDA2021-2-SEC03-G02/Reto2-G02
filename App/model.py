@@ -406,7 +406,7 @@ def total_obrasMAP(catalog, nombre):
     print(lt.size(lista))
     return lista
 
-def total_tecnicasMAP(catalog, lista):
+def total_tecnicasMAP(lista):
     mapa = mp.newMap(comparefunction=compareartworksmediumMAP)
     for artwork in lt.iterator(lista):
         if artwork["Medium"] != "":
@@ -419,7 +419,19 @@ def total_tecnicasMAP(catalog, lista):
                 dicc_medio = newMedio(medio)
                 mp.put(mapa, medio, dicc_medio)
             lt.addLast(dicc_medio["obras"], artwork)
-    return mp.keySet(mapa)
+    llaves = mp.keySet(mapa)
+    tamaño = lt.size(llaves)
+    maximo = 0
+    mayor = ""
+    for key in lt.iterator(llaves):
+        entry = mp.get(mapa, key)
+        lista = me.getValue(entry)
+        tamano = lt.size(lista)
+        if tamano > maximo:
+            maximo = tamano
+            mayor = key 
+    return tamaño, llaves, mayor
+
 
 
 
