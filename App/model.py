@@ -99,8 +99,6 @@ def addArtwork(catalog, artwork):
 def addArtist(catalog, artist):
     lt.addLast(catalog['artists'], artist)
     mp.put(catalog["DisplayName"], artist["DisplayName"], artist["ConstituentID"])
-    print(mp.get(catalog["DisplayName"], "George Lockwood"))
-
 
 def getLast3Artists(catalog):
     artists = catalog['artists']
@@ -141,7 +139,7 @@ def addArtworkConstituentID(catalog, artwork):
 def newID(id):
     dicc = {"id": "", "obras": None}
     dicc["id"] = id
-    dicc["obras"] = lt.newList('ARRAY_LIST', cmpfunction=compareartworks)
+    dicc["obras"] = lt.newList(cmpfunction=compareartworks)
     return dicc
 
 # Funciones para creacion de datos
@@ -397,6 +395,38 @@ def lista_tecnicas_mas_usadas(lista, tecnica):
             lt.addLast(x, obra)
     return x
 #LISTOOOOOO
+
+#Req 3 RETO 2
+
+def total_obrasMAP(catalog, nombre):
+    pareja = mp.get(catalog["DisplayName"], nombre)
+    id = me.getValue(pareja)
+    pareja_obras = mp.get(catalog["ConstituentID"], id)
+    lista = me.getValue(pareja_obras)["obras"]
+    print(lt.size(lista))
+    return lista
+
+def total_tecnicasMAP(catalog, lista):
+    mapa = mp.newMap(comparefunction=compareartworksmediumMAP)
+    for artwork in lt.iterator(lista):
+        if artwork["Medium"] != "":
+            medio = artwork["Medium"]
+            existMedium = mp.contains(mapa, medio)
+            if existMedium:
+                entry = mp.get(mapa, medio)
+                dicc_medio = me.getValue(entry)
+            else:
+                dicc_medio = newMedio(medio)
+                mp.put(mapa, medio, dicc_medio)
+            lt.addLast(dicc_medio["obras"], artwork)
+    return mp.keySet(mapa)
+
+
+
+
+
+
+
 
 # Funciones req4
 def NacionalidadNueva(nacionalidad):

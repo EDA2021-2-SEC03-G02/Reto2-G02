@@ -192,19 +192,26 @@ while True:
 
     elif int(inputs[0]) == 4:
         nombre = input("Indique el nombre del artista del cual desea conocer cuál fue su técnica más usada: ")
-        start_time = time.process_time()
-        total_obras = controller.total_obras(catalog, nombre)
-        print("El artista " + str(nombre) + " produjo un total de " +str(total_obras) + " obras")
-        lista_obras_artista = controller.lista_total_tecnicas(catalog, nombre)
-        lista_obras_artista_f = lista_obras_artista[0]
-        mas_frecuente = controller.tecnica_mas_utilizada(lista_obras_artista_f)
-        lista_mega_final = controller.lista_tecnicas_mas_usadas(lista_obras_artista_f, mas_frecuente[0])
-        print("El total de medios utilizados por el artista fue de: " + str(mas_frecuente[1]))
-        print("La técnica más utlizada por el artista fue: "+str(mas_frecuente[0]))
-        printObrasXMedioArtista(lista_mega_final)
-        stop_time = time.process_time()
-        elapsed_time_mseg = (stop_time - start_time)*1000
-        print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
+        opcion = int(input("Porfavor seleccione 1 si desea hacer el procedmimento con TAD lista, o seleccione 2 si desea hacerlo con TAD map"))
+        if opcion == 1:
+            start_time = time.process_time()
+            total_obras = controller.total_obras(catalog, nombre)
+            print("El artista " + str(nombre) + " produjo un total de " +str(total_obras) + " obras")
+            lista_obras_artista = controller.lista_total_tecnicas(catalog, nombre)
+            lista_obras_artista_f = lista_obras_artista[0]
+            mas_frecuente = controller.tecnica_mas_utilizada(lista_obras_artista_f)
+            lista_mega_final = controller.lista_tecnicas_mas_usadas(lista_obras_artista_f, mas_frecuente[0])
+            print("El total de medios utilizados por el artista fue de: " + str(mas_frecuente[1]))
+            print("La técnica más utlizada por el artista fue: "+str(mas_frecuente[0]))
+            printObrasXMedioArtista(lista_mega_final)
+            stop_time = time.process_time()
+            elapsed_time_mseg = (stop_time - start_time)*1000
+            print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
+        elif opcion == 2:
+            start_time = time.process_time()
+            total_obras = controller.total_obrasMAP(catalog, nombre)
+            total_tecnicas = controller. total_tecnicasMAP(catalog, total_obras)
+
     elif int(inputs[0]) == 5:
 
         result = controller.ordenarpaises(catalog)

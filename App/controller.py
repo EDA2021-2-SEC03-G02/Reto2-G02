@@ -97,8 +97,6 @@ def ArtistasNacimientoUltimos3(lista):
     return model.ArtistasNacimientoUltimos3(lista)
 
 #Funciones Req 3
-def buscar_artista_constituentID(catalog, nombre):
-    return model.buscar_artista_constituentID(catalog, nombre)
 
 def total_obras(catalog, nombre):
     return model.total_obras(catalog,nombre)
@@ -112,6 +110,11 @@ def tecnica_mas_utilizada(lista):
 def lista_tecnicas_mas_usadas(lista, tecnica):
     return model.lista_tecnicas_mas_usadas(lista, tecnica)
 
+#Funciones Req 3 Reto 2
+def total_obrasMAP(catalog, nombre):
+    return model.total_obrasMAP(catalog, nombre)
+def total_tecnicasMAP(catalog, lista):
+    return model.total_tecnicasMAP(catalog, lista)
 
 #Funciones Req 5
 def ListaPorDepto(catalog, depto):
