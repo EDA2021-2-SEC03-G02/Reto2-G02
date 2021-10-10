@@ -152,7 +152,6 @@ while True:
         a=lt.newList()
         a1=Last3Artworks(catalog)
         print(a1)
-        print(catalog["artistMAP"])
     elif int(inputs[0]) == 2:
         year1 = int(input("Por favor elija el año 1, con el que se dará inicio al rango: "))
         year2 = int(input("Por favor seleccione el año 2, con el que se dará fin al rango: "))

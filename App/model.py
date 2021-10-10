@@ -99,7 +99,7 @@ def addArtwork(catalog, artwork):
 def addArtist(catalog, artist):
     lt.addLast(catalog['artists'], artist)
     mp.put(catalog["DisplayName"], artist["DisplayName"], artist["ConstituentID"])
-    
+    print(mp.get(catalog["DisplayName"], "George Lockwood"))
 
 
 def getLast3Artists(catalog):
