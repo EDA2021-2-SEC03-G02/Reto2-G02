@@ -80,7 +80,7 @@ def newCatalog():
     catalog["ConstituentID"] = mp.newMap(10000,
                                    maptype='CHAINING',
                                    loadfactor=4.0,
-                                   comparefunction=compareartworksmediumMAP)
+                                   comparefunction=compareartworksConstituentIDMAP)
     return catalog
 
 
@@ -90,7 +90,7 @@ def addArtwork(catalog, artwork):
     AddNacionalidadesObras(catalog, artwork)
     addArtworkMedium(catalog, artwork)
     addArtworkConstituentID(catalog, artwork)
-    
+
 
 def addArtist(catalog, artist):
     lt.addLast(catalog['artists'], artist)
@@ -214,11 +214,11 @@ def compareartworksmediumMAP(medio, entry):
     else:
         return -1
 
-def compareartworksConstituentID(medio, entry):
-    medEntry = me.getKey(entry)
-    if medio > medEntry:
+def compareartworksConstituentIDMAP(id, entry):
+    idEntry = me.getKey(entry)
+    if id > idEntry:
         return 1
-    elif medEntry == medio:
+    elif id == idEntry:
         return 0
     else:
         return -1
