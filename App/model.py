@@ -63,7 +63,7 @@ def newCatalog():
     """
     catalog = {'artists': None,
                'artworks': None,
-               'nacionalidades': None, "Medium": None}
+               'nacionalidades': None, "Medium": None, "ConstituentID": None}
 
     TipoDeLista= input('¿Cómo desea guardar el catálogo del museo?(ll = Linked_list, al = Array_List))  ')
     if TipoDeLista == 'll':
@@ -77,7 +77,7 @@ def newCatalog():
                                    maptype='CHAINING',
                                    loadfactor=4.0,
                                    comparefunction=compareartworksmediumMAP)
-    catalog["Constituent_ID"] = mp.newMap(10000,
+    catalog["ConstituentID"] = mp.newMap(10000,
                                    maptype='CHAINING',
                                    loadfactor=4.0,
                                    comparefunction=compareartworksmediumMAP)
@@ -113,8 +113,35 @@ def lastThreeArtworks(catalog):
 
 
 
+def addArtworkConstituentID(catalog, artwork):
+    try:
+        ids = catalog["ConstituentID"]
+        cadena = artwork["ConstituentID"]
+        cadena = cadena.replace("[","")
+        cadena = cadena.replace("]","") 
+        lista = cadena.split(",")
+        for id in lista:
+            existID = mp.contains(ids, id)
+            if existID:
+                entry = mp.get(ids, id)
+                dicc_ids = me.getValue(entry)
+            else:
+                dicc_ids = newID(id)
+                mp.put(ids, id, dicc_ids)
+            lt.addLast(dicc_ids["obras"], artwork)    
+            
 
 
+    except Exception:
+        return None
+
+def newID(id):
+    dicc = {"id": "", "obras": None}
+    dicc["id"] = id
+    dicc["obras"] = lt.newList('ARRAY_LIST', cmpfunction=compareartworks)
+    return dicc
+
+    
 
 # Funciones para creacion de datos
 
@@ -188,8 +215,8 @@ def compareartworksmediumMAP(medio, entry):
         return 0
     else:
         return -1
-        
-def compareartworksmediumMAP(medio, entry):
+
+def compareartworksConstituentID(medio, entry):
     medEntry = me.getKey(entry)
     if medio > medEntry:
         return 1
@@ -618,7 +645,7 @@ def addArtworkMedium(catalog, artwork):
                 mp.put(mediums, medio, dicc_medio)
             lt.addLast(dicc_medio["obras"], artwork)
 
-    except Exception:
+    except Exception:   
         return None
 
 def newMedio(medio):
