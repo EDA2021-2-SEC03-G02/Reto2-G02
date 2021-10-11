@@ -211,6 +211,12 @@ while True:
             start_time = time.process_time()
             total_obras = controller.total_obrasMAP(catalog, nombre)
             total_tecnicas = controller.total_tecnicasMAP(total_obras)
+            print("El artista tuvo un total de " +str(total_tecnicas[1]) + " obras.")
+            print("Dentro de las obras del artista, se usaron en total " +str(total_tecnicas[0])+ " técnicas/medios.")
+            print("El nombre de la técnica/medio más utilizad@ por el artista es: " + total_tecnicas[2])
+            print("Las obras que usaron la técnica más implementada fue: ")
+            print(total_tecnicas[3])
+
 
     elif int(inputs[0]) == 5:
 

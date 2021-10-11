@@ -403,10 +403,10 @@ def total_obrasMAP(catalog, nombre):
     id = me.getValue(pareja)
     pareja_obras = mp.get(catalog["ConstituentID"], id)
     lista = me.getValue(pareja_obras)["obras"]
-    print(lt.size(lista))
     return lista
 
 def total_tecnicasMAP(lista):
+    size = lt.size(lista)
     mapa = mp.newMap(comparefunction=compareartworksmediumMAP)
     for artwork in lt.iterator(lista):
         if artwork["Medium"] != "":
@@ -426,15 +426,13 @@ def total_tecnicasMAP(lista):
     for key in lt.iterator(llaves):
         entry = mp.get(mapa, key)
         lista1 = me.getValue(entry)["obras"]
-        print(lista1)
         tamano = lt.size(lista1)
         if tamano > maximo:
             maximo = tamano
             mayor = key
-    print(tamaño)
-    print(mayor)
-    print(maximo) 
-    return tamaño, llaves, mayor
+    lista_final = mp.get(mapa, mayor)
+    lista_final1 = me.getValue(lista_final)["obras"]
+    return tamaño, size, mayor, lista_final1
 
 
 
