@@ -214,8 +214,12 @@ while True:
             print("El artista tuvo un total de " +str(total_tecnicas[1]) + " obras.")
             print("Dentro de las obras del artista, se usaron en total " +str(total_tecnicas[0])+ " técnicas/medios.")
             print("El nombre de la técnica/medio más utilizad@ por el artista es: " + total_tecnicas[2])
-            print("Las obras que usaron la técnica más implementada fue: ")
-            print(total_tecnicas[3])
+            primeras3 = controller.ArtistasNacimientoPrimeros3(total_tecnicas[3])
+            ultimas3 = controller.ArtistasNacimientoUltimos3(total_tecnicas[3])
+            print("Las primeras 3 obras que usaron la técnica más implementada son: ")
+            printObrasXMedioArtista(primeras3)
+            print("Las últimas 3 obras que usaron la técnica más implementada son: ")
+            printObrasXMedioArtista(ultimas3)
 
 
     elif int(inputs[0]) == 5:
