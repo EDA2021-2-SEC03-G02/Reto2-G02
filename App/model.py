@@ -425,11 +425,15 @@ def total_tecnicasMAP(lista):
     mayor = ""
     for key in lt.iterator(llaves):
         entry = mp.get(mapa, key)
-        lista = me.getValue(entry)
-        tamano = lt.size(lista)
+        lista1 = me.getValue(entry)["obras"]
+        print(lista1)
+        tamano = lt.size(lista1)
         if tamano > maximo:
             maximo = tamano
-            mayor = key 
+            mayor = key
+    print(tamaño)
+    print(mayor)
+    print(maximo) 
     return tamaño, llaves, mayor
 
 

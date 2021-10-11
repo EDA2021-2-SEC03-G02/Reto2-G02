@@ -210,7 +210,7 @@ while True:
         elif opcion == 2:
             start_time = time.process_time()
             total_obras = controller.total_obrasMAP(catalog, nombre)
-            total_tecnicas = controller. total_tecnicasMAP(catalog, total_obras)
+            total_tecnicas = controller.total_tecnicasMAP(total_obras)
 
     elif int(inputs[0]) == 5:
 

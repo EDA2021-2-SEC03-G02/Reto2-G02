@@ -113,8 +113,8 @@ def lista_tecnicas_mas_usadas(lista, tecnica):
 #Funciones Req 3 Reto 2
 def total_obrasMAP(catalog, nombre):
     return model.total_obrasMAP(catalog, nombre)
-def total_tecnicasMAP(catalog, lista):
-    return model.total_tecnicasMAP(catalog, lista)
+def total_tecnicasMAP(lista):
+    return model.total_tecnicasMAP(lista)
 
 #Funciones Req 5
 def ListaPorDepto(catalog, depto):
