@@ -153,20 +153,24 @@ while True:
         a1=Last3Artworks(catalog)
         print(a1)
     elif int(inputs[0]) == 2:
-        year1 = int(input("Por favor elija el año 1, con el que se dará inicio al rango: "))
-        year2 = int(input("Por favor seleccione el año 2, con el que se dará fin al rango: "))
-        start_time = time.process_time()
-        sublista = controller.sublistaRangoArtistas(catalog, year1, year2)
-        print("La cantidad de artistas nacidos en este rango de años es de: " + str(sublista[1]))
-        primeros3 = controller.ArtistasNacimientoPrimeros3(sublista[0])
-        ultimos3 = controller.ArtistasNacimientoUltimos3(sublista[0])
-        print("Los primeros 3 artistas nacidos en este rango de años son: ")
-        printArtistasNacimiento(primeros3)
-        print("Los últimos 3 artistas nacidos en este rango de años son: ")
-        printArtistasNacimiento(ultimos3)
-        stop_time = time.process_time()
-        elapsed_time_mseg = (stop_time - start_time)*1000
-        print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
+        opcion = int(input("Porfavor seleccione 1 si desea hacer el procedmimento con TAD lista, o seleccione 2 si desea hacerlo con TAD map"))
+        if opcion == 1:
+            year1 = int(input("Por favor elija el año 1, con el que se dará inicio al rango: "))
+            year2 = int(input("Por favor seleccione el año 2, con el que se dará fin al rango: "))
+            start_time = time.process_time()
+            sublista = controller.sublistaRangoArtistas(catalog, year1, year2)
+            print("La cantidad de artistas nacidos en este rango de años es de: " + str(sublista[1]))
+            primeros3 = controller.ArtistasNacimientoPrimeros3(sublista[0])
+            ultimos3 = controller.ArtistasNacimientoUltimos3(sublista[0])
+            print("Los primeros 3 artistas nacidos en este rango de años son: ")
+            printArtistasNacimiento(primeros3)
+            print("Los últimos 3 artistas nacidos en este rango de años son: ")
+            printArtistasNacimiento(ultimos3)
+            stop_time = time.process_time()
+            elapsed_time_mseg = (stop_time - start_time)*1000
+            print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
+        if opcion == 2:
+            print(catalog["BeginDate"])
 
     elif int(inputs[0])== 3:
         anio1 = int(input("Indique desde que anio desea la muestra: "))
