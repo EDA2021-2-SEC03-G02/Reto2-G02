@@ -85,6 +85,10 @@ def newCatalog():
                                    maptype='CHAINING',
                                    loadfactor=4.0,
                                    comparefunction=compareartistMAP)
+    catalog["BeginDate"] = mp.newMap(10000,
+                                   maptype='CHAINING',
+                                   loadfactor=4.0,
+                                   comparefunction=compareartistMAP)
     return catalog
 
 
@@ -99,6 +103,7 @@ def addArtwork(catalog, artwork):
 def addArtist(catalog, artist):
     lt.addLast(catalog['artists'], artist)
     mp.put(catalog["DisplayName"], artist["DisplayName"], artist["ConstituentID"])
+    addArtistBeginDate(catalog, artist)
 
 def getLast3Artists(catalog):
     artists = catalog['artists']
@@ -112,9 +117,27 @@ def lastThreeArtworks(catalog):
     return sublista
 
 
+def addArtistBeginDate(catalog, artist):
+    try:
+        dates = catalog["BeginDate"]
+        if artist["BeginDate"] != "" and artist["BeginDate"] != "":
+            fecha = artist["BeginDate"]
+            existFecha = mp.contains(dates, fecha)
+            if existFecha:
+                entry = mp.get(dates, fecha)
+                dicc_fecha = me.getValue(entry)
+            else:
+                dicc_fecha = newFecha(fecha)
+                mp.put(dates, fecha, dicc_fecha)
+            lt.addLast(dicc_fecha["artistas"], artist)
+    except Exception:
+        return None
 
-
-
+def newFecha(fecha):
+    dicc = {"fecha":"", "artistas": None}
+    dicc["fecha"] = fecha
+    dicc["artistas"] = lt.newList('ARRAY_LIST', cmpfunction=compareartist)
+    return dicc
 
 def addArtworkConstituentID(catalog, artwork):
     try:
@@ -229,6 +252,15 @@ def compareartistMAP(keyname, artist):
         return 0
     elif (keyname > artistEntry):
         return 1
+    else:
+        return -1
+
+def compareartistBeginDateMAP(artista, entry):
+    artistEntry = me.getKey(entry)
+    if artista > artistEntry:
+        return 1
+    elif artistEntry == artista:
+        return 0
     else:
         return -1
         
