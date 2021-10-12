@@ -564,6 +564,11 @@ def ArtistasNacimientoUltimos3(lista):
     sublista = lt.subList(lista, lt.size(lista)-3, 3)
     return sublista
 
+# Req 3 Reto 2
+
+def sublistaRangoArtistasMAP(catalog, year1, year2):
+    llaves = mp.keySet(catalog["BeginDate"])
+
 
 #Funciones para requerimiento 5
 
