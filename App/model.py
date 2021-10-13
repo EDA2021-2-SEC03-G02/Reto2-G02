@@ -63,7 +63,7 @@ def newCatalog():
     """
     catalog = {'artists': None,
                'artworks': None,
-               'nacionalidades': None, "Medium": None, "ConstituentID": None, "artistMAP": None}
+               'nacionalidades': None, "Medium": None, "ConstituentID": None, "artistMAP": None, "DisplayName": None, "BeginDate": None, "NationalityArtist": None, "NationalityArtworks": None}
 
     TipoDeLista= input('¿Cómo desea guardar el catálogo del museo?(ll = Linked_list, al = Array_List))  ')
     if TipoDeLista == 'll':
