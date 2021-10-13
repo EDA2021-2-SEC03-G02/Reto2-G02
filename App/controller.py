@@ -152,6 +152,11 @@ def ObrasPorMedium(catalog, medium):
 def nObrasMasAntiguas(lista, n):
     return model.nObrasMasAntiguas(lista, n)
 
+#lab6
+def ObrasPorNacionalidad(catalog, nacionalidad):
+    return model.ObrasPorNacionalidad(catalog, nacionalidad)
+    
+
 
 # Inicialización del Catálogo de libros
 

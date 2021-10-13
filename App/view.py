@@ -141,8 +141,13 @@ while True:
     if int(inputs[0]) == 1:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
+        start_time = time.process_time()
         loadData(catalog)
-        print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
+        stop_time = time.process_time()
+        elapsed_time_mseg = (stop_time - start_time)*1000
+        print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
+
+        """print('Artistas cargados: ' + str(lt.size(catalog['artists'])))
         print('Obras cargadas: ' + str(lt.size(catalog['artworks'])))
         print("Los últimos 3 artistas son: ")
         a=lt.newList()
@@ -151,7 +156,7 @@ while True:
         print("Las últimas 3 obras son: ")
         a=lt.newList()
         a1=Last3Artworks(catalog)
-        print(a1)
+        print(a1)"""
     elif int(inputs[0]) == 2:
         opcion = int(input("Porfavor seleccione 1 si desea hacer el procedmimento con TAD lista, o seleccione 2 si desea hacerlo con TAD map"))
         if opcion == 1:
@@ -233,7 +238,9 @@ while True:
             print("El tiempo (en mseg) que se demoró el código fue de: ", str(result[0]))
             printTop10paises(result[1])
         elif opcion == 2:
-            print(catalog["NationalityArtworks"])
+            nacionalidad = input("Por favor indique cual es la nacionalidad de la cual desea conocer la cantidad de obras creadas por artistas de esta nacionalidad: ")
+            size = controller.ObrasPorNacionalidad(catalog, nacionalidad)
+            print("Los artistas con la nacionalidad " + nacionalidad + "crearon un total de " +str(size)+ " obras.")
     elif int(inputs[0]) == 6:
         departamento = input("Seleccione el Departamento del cual desea saber su costo total de envío")
         start_time = time.process_time()

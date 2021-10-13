@@ -103,9 +103,9 @@ def newCatalog():
 def addArtwork(catalog, artwork):
     # Se adiciona el libro a la lista de libros
     lt.addLast(catalog['artworks'], artwork)
-    AddNacionalidadesObras(catalog, artwork)
+    #AddNacionalidadesObras(catalog, artwork)
     addArtworkMedium(catalog, artwork)
-    addArtworkConstituentID(catalog, artwork)
+   #addArtworkConstituentID(catalog, artwork)
     addArtworkNationality(catalog, artwork)
 
 
@@ -114,7 +114,7 @@ def addArtist(catalog, artist):
     mp.put(catalog["DisplayName"], artist["DisplayName"], artist["ConstituentID"])
     if artist["Nationality"] != "" and artist["Nationality"] != " ":
         mp.put(catalog["NationalityArtist"], artist["ConstituentID"], artist["Nationality"])
-    addArtistBeginDate(catalog, artist)
+    #addArtistBeginDate(catalog, artist)
 
 def getLast3Artists(catalog):
     artists = catalog['artists']
@@ -574,8 +574,13 @@ def newNacion(nationality):
     dicc["obras"] = lt.newList('ARRAY_LIST', cmpfunction=compareartworks)
     return dicc
 
-
-
+def ObrasPorNacionalidad(catalog, nacionalidad):
+    nacion = mp.get(catalog["NationalityArtworks"], nacionalidad)
+    if nacion:
+        lista =  me.getValue(nacion)["obras"]
+        size = lt.size(lista)
+        return size
+    return "La nacionalidad no existe"
 
 
 
