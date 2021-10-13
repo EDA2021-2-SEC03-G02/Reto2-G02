@@ -96,7 +96,7 @@ def newCatalog():
     catalog["NationalityArtworks"] = mp.newMap(10000,
                                    maptype='CHAINING',
                                    loadfactor=4.0,
-                                   comparefunction=compareartistMAP)
+                                   comparefunction=compareartworksConstituentIDMAP)
     return catalog
 
 
@@ -112,7 +112,8 @@ def addArtwork(catalog, artwork):
 def addArtist(catalog, artist):
     lt.addLast(catalog['artists'], artist)
     mp.put(catalog["DisplayName"], artist["DisplayName"], artist["ConstituentID"])
-    mp.put(catalog["NationalityArtist"], artist["ConstituentID"], artist["Nationality"])
+    if artist["Nationality"] != "" and artist["Nationality"] != " ":
+        mp.put(catalog["NationalityArtist"], artist["ConstituentID"], artist["Nationality"])
     addArtistBeginDate(catalog, artist)
 
 def getLast3Artists(catalog):

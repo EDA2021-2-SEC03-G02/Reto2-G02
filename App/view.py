@@ -233,7 +233,7 @@ while True:
             print("El tiempo (en mseg) que se demoró el código fue de: ", str(result[0]))
             printTop10paises(result[1])
         elif opcion == 2:
-            print(catalog["NationalityArtworks"])
+            print(catalog["NationalityArtist"])
     elif int(inputs[0]) == 6:
         departamento = input("Seleccione el Departamento del cual desea saber su costo total de envío")
         start_time = time.process_time()
