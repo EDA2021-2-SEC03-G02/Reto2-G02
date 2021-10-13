@@ -89,6 +89,10 @@ def newCatalog():
                                    maptype='CHAINING',
                                    loadfactor=4.0,
                                    comparefunction=compareartistMAP)
+    catalog["NationalityArtist"] = mp.newMap(10000,
+                                   maptype='CHAINING',
+                                   loadfactor=4.0,
+                                   comparefunction=compareartistMAP)
     return catalog
 
 
@@ -98,11 +102,13 @@ def addArtwork(catalog, artwork):
     AddNacionalidadesObras(catalog, artwork)
     addArtworkMedium(catalog, artwork)
     addArtworkConstituentID(catalog, artwork)
+    addArtworkNationality(catalog, artwork)
 
 
 def addArtist(catalog, artist):
     lt.addLast(catalog['artists'], artist)
     mp.put(catalog["DisplayName"], artist["DisplayName"], artist["ConstituentID"])
+    mp.put(catalog["NationalityArtist"], artist["ConstituentID"], artist["Nationality"])
     addArtistBeginDate(catalog, artist)
 
 def getLast3Artists(catalog):
@@ -533,6 +539,16 @@ def ordenarpaises(nacionalidades):
     Rankingtop10 = lt.subList(sorted_list, 1, 10)
     return time_ms, Rankingtop10
 
+#Req 4 Reto 2
+def addArtworkNationality(catalog, artwork):
+    cadena = artwork["ConstituentID"]
+    cadena = cadena.replace("[","")
+    cadena = cadena.replace("]","") 
+    lista = cadena.split(",")
+    for numero in lista:
+        None
+
+
 
 
 
@@ -563,7 +579,7 @@ def ArtistasNacimientoPrimeros3(lista):
 def ArtistasNacimientoUltimos3(lista):
     sublista = lt.subList(lista, lt.size(lista)-3, 3)
     return sublista
-
+    
 # Req 3 Reto 2
 
 def sublistaRangoArtistasMAP(catalog, year1, year2):
