@@ -93,6 +93,10 @@ def newCatalog():
                                    maptype='CHAINING',
                                    loadfactor=4.0,
                                    comparefunction=compareartistMAP)
+    catalog["NationalityArtworks"] = mp.newMap(10000,
+                                   maptype='CHAINING',
+                                   loadfactor=4.0,
+                                   comparefunction=compareartistMAP)
     return catalog
 
 
@@ -541,12 +545,31 @@ def ordenarpaises(nacionalidades):
 
 #Req 4 Reto 2
 def addArtworkNationality(catalog, artwork):
-    cadena = artwork["ConstituentID"]
-    cadena = cadena.replace("[","")
-    cadena = cadena.replace("]","") 
-    lista = cadena.split(",")
-    for numero in lista:
-        None
+    try:
+        cadena = artwork["ConstituentID"]
+        cadena = cadena.replace("[","")
+        cadena = cadena.replace("]","") 
+        lista = cadena.split(",")
+        mapa = catalog["NationalityArtworks"]
+        for numero in lista:
+            entry = mp.get(catalog["NationalityArtist"], numero)
+            nationality = me.getValue(entry)
+            existArtwork = mp.contains(mapa, nationality)
+            if existArtwork:
+                entry1 = mp.get(mapa, nationality)
+                dicc_nacion = me.getValue(entry1)
+            else:
+                dicc_nacion = newNacion(nationality)
+                mp.put(mapa, nationality, dicc_nacion)
+            lt.addLast(dicc_nacion["nacionalidad"], artwork)
+    except Exception:
+        return None
+
+def newNacion(nationality):
+    dicc = {"nacionalidad": "", "obras": None}
+    dicc["nacionalidad"] = nationality
+    dicc["obras"] = lt.newList('ARRAY_LIST', cmpfunction=compareartworks)
+    return dicc
 
 
 
