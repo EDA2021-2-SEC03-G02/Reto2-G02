@@ -562,9 +562,9 @@ def addArtworkNationality(catalog, artwork):
             else:
                 dicc_nacion = newNacion(nationality)
                 mp.put(mapa, nationality, dicc_nacion)
-            print("AAAAAA")
+            #print("AAAAAA")
             lt.addLast(dicc_nacion["obras"], artwork)
-            print("BBBBBB")
+            #print("BBBBBB")
     except Exception:
         return None
 
