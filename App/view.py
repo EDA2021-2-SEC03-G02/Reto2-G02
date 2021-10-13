@@ -169,7 +169,7 @@ while True:
             stop_time = time.process_time()
             elapsed_time_mseg = (stop_time - start_time)*1000
             print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
-        if opcion == 2:
+        elif opcion == 2:
             print(catalog["BeginDate"])
 
     elif int(inputs[0])== 3:
@@ -227,10 +227,13 @@ while True:
 
 
     elif int(inputs[0]) == 5:
-
-        result = controller.ordenarpaises(catalog)
-        print("El tiempo (en mseg) que se demoró el código fue de: ", str(result[0]))
-        printTop10paises(result[1])
+        opcion = int(input("Porfavor seleccione 1 si desea hacer el procedmimento con TAD lista, o seleccione 2 si desea hacerlo con TAD map"))
+        if opcion == 1:
+            result = controller.ordenarpaises(catalog)
+            print("El tiempo (en mseg) que se demoró el código fue de: ", str(result[0]))
+            printTop10paises(result[1])
+        elif opcion == 2:
+            print(catalog["NationalityArtworks"])
     elif int(inputs[0]) == 6:
         departamento = input("Seleccione el Departamento del cual desea saber su costo total de envío")
         start_time = time.process_time()
