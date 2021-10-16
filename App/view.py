@@ -90,7 +90,6 @@ def printultimas3obrasordenadas(lista):
     pass
 
 def printObrasXMedioArtista(lista):
-    print("Las obras creadas con la téncia más popular del artista son: ")
     for obra in lt.iterator(lista):
         print("Nombre de la obra: " + obra["Title"] + " --- Fecha de creación: " + obra["Date"] + " --- Medio/Técnica: " + obra["Medium"] + " --- Dimensiones: " + obra["Dimensions"])
     pass
@@ -212,6 +211,7 @@ while True:
             lista_mega_final = controller.lista_tecnicas_mas_usadas(lista_obras_artista_f, mas_frecuente[0])
             print("El total de medios utilizados por el artista fue de: " + str(mas_frecuente[1]))
             print("La técnica más utlizada por el artista fue: "+str(mas_frecuente[0]))
+            print("Las obras creadas con la técnica más popular del artista son: ")
             printObrasXMedioArtista(lista_mega_final)
             stop_time = time.process_time()
             elapsed_time_mseg = (stop_time - start_time)*1000
@@ -223,12 +223,16 @@ while True:
             print("El artista tuvo un total de " +str(total_tecnicas[1]) + " obras.")
             print("Dentro de las obras del artista, se usaron en total " +str(total_tecnicas[0])+ " técnicas/medios.")
             print("El nombre de la técnica/medio más utilizad@ por el artista es: " + total_tecnicas[2])
-            primeras3 = controller.ArtistasNacimientoPrimeros3(total_tecnicas[3])
-            ultimas3 = controller.ArtistasNacimientoUltimos3(total_tecnicas[3])
-            print("Las primeras 3 obras que usaron la técnica más implementada son: ")
-            printObrasXMedioArtista(primeras3)
-            print("Las últimas 3 obras que usaron la técnica más implementada son: ")
-            printObrasXMedioArtista(ultimas3)
+            if total_tecnicas[4] <=3:
+                print("Las obras creadas con la técnica más popular del artista son: ")
+                printObrasXMedioArtista(total_tecnicas[3])
+            else:
+                primeras3 = controller.ArtistasNacimientoPrimeros3(total_tecnicas[3])
+                ultimas3 = controller.ArtistasNacimientoUltimos3(total_tecnicas[3])
+                print("Las primeras 3 obras que usaron la técnica más implementada son: ")
+                printObrasXMedioArtista(primeras3)
+                print("Las últimas 3 obras que usaron la técnica más implementada son: ")
+                printObrasXMedioArtista(ultimas3)
 
 
     elif int(inputs[0]) == 5:
