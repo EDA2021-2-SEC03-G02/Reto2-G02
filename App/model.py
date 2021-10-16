@@ -103,7 +103,7 @@ def newCatalog():
 def addArtwork(catalog, artwork):
     # Se adiciona el libro a la lista de libros
     lt.addLast(catalog['artworks'], artwork)
-    #AddNacionalidadesObras(catalog, artwork)
+    AddNacionalidadesObras(catalog, artwork)
     addArtworkMedium(catalog, artwork)
     addArtworkConstituentID(catalog, artwork)
     addArtworkNationality(catalog, artwork)
@@ -476,7 +476,8 @@ def total_tecnicasMAP(lista):
             mayor = key
     lista_final = mp.get(mapa, mayor)
     lista_final1 = me.getValue(lista_final)["obras"]
-    return tamaño, size, mayor, lista_final1
+    tamanio = lt.size(lista_final1)
+    return tamaño, size, mayor, lista_final1, tamanio
 
 
 
