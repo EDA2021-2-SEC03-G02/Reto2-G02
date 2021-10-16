@@ -96,6 +96,11 @@ def ArtistasNacimientoPrimeros3(lista):
 def ArtistasNacimientoUltimos3(lista):
     return model.ArtistasNacimientoUltimos3(lista)
 
+#Funciones Req 1 Reto 2
+
+def BeginDateInRange(catalog, year1, year2):
+    return model.BeginDateInRange(catalog, year1, year2)
+
 #Funciones Req 3
 
 def total_obras(catalog, nombre):
@@ -134,6 +139,10 @@ def ObrasMasCaras(lista):
 
 def ArtistaEnObra(catalog, obra):
     return model.ArtistaEnObra(catalog, obra)
+
+#Funciones Req 5 Reto 2
+def ListaDelDeptoMAP(catalog, depto):
+    return model.ListaDelDeptoMAP(catalog, depto)
 
 
 
