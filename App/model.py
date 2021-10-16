@@ -675,8 +675,6 @@ def BeginDateInRange(catalog, year1, year2):
                 entry = mp.get(catalog["BeginDate"], fecha)
                 lista_artistas = me.getValue(entry)["artistas"] 
                 for artista in lt.iterator(lista_artistas):
-                    print("-----------------------")
-                    print(artista)
                     lt.addLast(sublist, artista)
     return sublist, lt.size(sublist)    
 # Req 3 Reto 2
