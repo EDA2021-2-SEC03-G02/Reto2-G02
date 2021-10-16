@@ -176,6 +176,7 @@ while True:
         elif opcion == 2:
             year1 = int(input("Por favor elija el año 1, con el que se dará inicio al rango: "))
             year2 = int(input("Por favor seleccione el año 2, con el que se dará fin al rango: "))
+            start_time = time.process_time()
             listaArtistas = controller.BeginDateInRange(catalog, year1, year2)
             primeros3 = controller.ArtistasNacimientoPrimeros3(listaArtistas[0])
             ultimos3 = controller.ArtistasNacimientoUltimos3(listaArtistas[0])
@@ -184,9 +185,9 @@ while True:
             printArtistasNacimiento(primeros3)
             print("Los últimos 3 artistas nacidos en este rango de años son: ")
             printArtistasNacimiento(ultimos3)
-
-
-
+            stop_time = time.process_time()
+            elapsed_time_mseg = (stop_time - start_time)*1000
+            print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
     elif int(inputs[0])== 3:
         anio1 = int(input("Indique desde que anio desea la muestra: "))
         mes1 = int(input("Indique desde que mes desea la muestra: "))
@@ -244,8 +245,8 @@ while True:
                 printObrasXMedioArtista(primeras3)
                 print("Las últimas 3 obras que usaron la técnica más implementada son: ")
                 printObrasXMedioArtista(ultimas3)
-
-
+            elapsed_time_mseg = (stop_time - start_time)*1000
+            print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
     elif int(inputs[0]) == 5:
         opcion = int(input("Porfavor seleccione 1 si desea hacer el procedmimento con TAD lista, o seleccione 2 si desea hacerlo con TAD map"))
         if opcion == 1:
@@ -282,6 +283,7 @@ while True:
             print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
         elif opcion == 2:
             departamento = input("Seleccione el Departamento del cual desea saber su costo total de envío")
+            start_time = time.process_time()
             ListaPorDepto = controller.ListaDelDeptoMAP(catalog, departamento)
             lista = ListaPorDepto[0]            
             tamañoDepto = ListaPorDepto[1]
@@ -298,6 +300,9 @@ while True:
             print("Las 5 obras más antiguas son: ")
             printObrasConCostos(top5Antiguas, catalog)
             print("El total de obras a transportar es de: " + str(tamañoDepto))
+            stop_time = time.process_time()
+            elapsed_time_mseg = (stop_time - start_time)*1000
+            print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
     elif int(inputs[0] )== 7:
         medium = input("Indique que medio desear conocer: ")
         n = int(input("Digite la cantidad de obras más antiguas que desea conocer: "))
