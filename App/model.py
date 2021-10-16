@@ -105,8 +105,9 @@ def addArtwork(catalog, artwork):
     lt.addLast(catalog['artworks'], artwork)
     #AddNacionalidadesObras(catalog, artwork)
     addArtworkMedium(catalog, artwork)
-   #addArtworkConstituentID(catalog, artwork)
+    addArtworkConstituentID(catalog, artwork)
     addArtworkNationality(catalog, artwork)
+    #Prueba de que guarda
 
 
 def addArtist(catalog, artist):
