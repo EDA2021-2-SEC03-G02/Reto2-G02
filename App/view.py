@@ -78,16 +78,21 @@ def printSortResultsArtworks(ord_artworks, sample=700):
             i += 1
     pass
 
-def printprimeras3obrasordenadas(lista):
-    print("Las primeras 3 obras del rango son: ")
-    for obra in lt.iterator(lista):
-        print("Nombre de la obra: " + obra["Title"] + " --- Artista(s): " + obra["ConstituentID"] + " --- Fecha: " + obra["Date"] + " --- Medio: " + obra["Medium"]+ " --- Dimensiones: " + obra["Dimensions"])
-    pass
-def printultimas3obrasordenadas(lista):
-    print("Las últimas 3 obras del rango son: ")
-    for obra in lt.iterator(lista):
-        print("Nombre de la obra: " + obra["Title"] + " --- Artista(s): " + obra["ConstituentID"] + " --- Fecha: " + obra["Date"] + " --- Medio: " + obra["Medium"]+ " --- Dimensiones: " + obra["Dimensions"])
-    pass
+def printObrasOrdenadas(obrasOrdenadas):
+    print('\nLas primeras 3 obras del rango de fechas ingresado son: ')
+    contador=1
+    while contador in range(1,4):
+        obra= lt.getElement(obrasOrdenadas,contador)
+        print("Nombre de la obra: "+ obra["Title"]+"---Fecha de creación: " + obra["Date"] + " --- Medio/Técnica: " + obra["Medium"] + " --- Dimensiones: " + obra["Dimensions"])
+        contador+=1
+    print('\nLas ultimas 3 obras del rango de fechas ingresado son: ')
+    contador2=2
+    while contador2 in range(0,3):
+        posicion= int(lt.size(obrasOrdenadas))-contador2
+        obra= lt.getElement(obrasOrdenadas,posicion)
+        print("Nombre de la obra: "+ obra["Title"]+"---Fecha de creación: " + obra["Date"] + " --- Medio/Técnica: " + obra["Medium"] + " --- Dimensiones: " + obra["Dimensions"])
+        contador2-=1
+
 
 def printObrasXMedioArtista(lista):
     for obra in lt.iterator(lista):
@@ -196,16 +201,14 @@ while True:
         mes2 = int(input("Indique hasta que mes desea la muestra: "))
         dia2 = int(input("Indique hasta que dia desea la muestra: "))
         start_time = time.process_time()
-
-        result = controller.sortArtworksDateAcquired(catalog, anio1, anio2, mes1, mes2, dia1, dia2) 
-        primeras3contr=result[3]
-        ultimas3contr=result[4]
-        print("Para la muestra del total de elementos, el tiempo (mseg) es: ", str(result[0]))
+        fechaa1= str(anio1)+'-'+str(mes1)+'-'+str(dia1)
+        fechaa2= str(anio2)+'-'+str(mes2)+'-'+str(dia2)
+        fecha1= {'DateAcquired':fechaa1}
+        fecha2= {'DateAcquired':fechaa2}
+        result = controller.ordenarObrasEnRangoDeFechas(catalog,fecha1,fecha2) 
+        print("Para la muestra del total de elementos, el tiempo (mseg) es: ", str(result[0][0]))
         print("El número total de obras en el rango de tiempo es: ", str(result[1]))
-        print("El número total de obras compradas en el rango de tiempo son: ", str(result[2]))
-        printprimeras3obrasordenadas(primeras3contr)
-        printultimas3obrasordenadas(ultimas3contr)
-
+        printObrasOrdenadas(result[0][1])
         stop_time = time.process_time()
         elapsed_time_mseg = (stop_time - start_time)*1000
         print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))

@@ -78,11 +78,6 @@ def getLast3Artworks(catalog):
 # Funciones para la carga de datos
 
 # Funciones de ordenamiento
-def sortArtworksDateAcquired(catalog, anio1, anio2, mes1, mes2, dia1, dia2):
-    """
-    Ordena los libros por average_rating
-    """
-    return model.sortArtworksDateAcquired(catalog, anio1, anio2, mes1, mes2, dia1, dia2)
 
 # Funciones de consulta sobre el catálogo
 
@@ -151,6 +146,11 @@ def ordenarpaises(catalog):
     paises=catalog['nacionalidades']
     resultado=model.ordenarpaises(paises)
     return resultado
+
+def ordenarObrasEnRangoDeFechas(catalog,fecha1,fecha2):
+    obras_en_rango= model.getObrasEnRangoDeFechas(catalog,fecha1,fecha2)
+    sortedResult= model.ordenarobras(obras_en_rango[0])
+    return sortedResult, obras_en_rango[1]
 
 
 #lab5

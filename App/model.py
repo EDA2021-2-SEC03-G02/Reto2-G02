@@ -68,6 +68,7 @@ def newCatalog():
               "ConstituentID": None, 
               "artistMAP": None, 
               "DisplayName": None, 
+              "Dates": None,
               "BeginDate": None, 
               "NationalityArtist": None, 
               "NationalityArtworks": None, 
@@ -101,6 +102,10 @@ def newCatalog():
                                    maptype='PROBING',
                                    loadfactor=0.5,
                                    comparefunction=compareartistMAP)
+    catalog["Dates"] = mp.newMap(5000,
+                                   maptype='PROBING',
+                                   loadfactor=0.5,
+                                   comparefunction=compareartistMAP)
     catalog["NationalityArtworks"] = mp.newMap(10000,
                                    maptype='PROBING',
                                    loadfactor=0.5,
@@ -121,6 +126,7 @@ def addArtwork(catalog, artwork):
     addArtworkConstituentID(catalog, artwork)
     addArtworkNationality(catalog, artwork)
     addArtworkDepartment(catalog, artwork)
+    addArtworkDates(catalog, artwork)
     #Prueba de que guarda
 
 
@@ -205,6 +211,35 @@ def addArtworkConstituentID(catalog, artwork):
             
     except Exception:
         return None
+def addArtworkDates(catalog,artwork):
+    try:
+        fechas=catalog["Dates"]
+        if artwork["DateAcquired"] != "":
+            fecha=artwork["DateAcquired"]
+        else:
+            fecha=""
+        existe= mp.contains(fechas,fecha)
+        if existe:
+            entrada= mp.get(fechas, fecha)
+            fecha_nueva= me.getValue(entrada)
+        else:
+            fecha_nueva=nuevaFecha(fecha)
+            mp.put(fechas,fecha,fecha_nueva)
+        lt.addLast(fecha_nueva["artworks"], artwork)
+        medioDeAdq= artwork["CreditLine"].lower()
+        if "purchase" in medioDeAdq:
+            fecha_nueva["comprado"]+=1
+    except Exception:
+        return None
+
+
+def nuevaFecha(fecha):
+    entrada= {"fecha":'',"artworks":None,"comprado":0 }
+    entrada["fecha"]=fecha
+    entrada["artworks"]= lt.newList('ARRAY_LIST')
+    return entrada
+
+
 
 def newID(id):
     dicc = {"id": "", "obras": None}
@@ -225,26 +260,30 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     artwork2: informacion de la segunda obra que incluye su valor 'DateAcquired'
     """
 
-    strdateArt1= artwork1['DateAcquired']
-    if len(strdateArt1) == 0:
-        return False
-    year1=int(strdateArt1[0]+strdateArt1[1]+strdateArt1[2]+strdateArt1[3])
-    month1=int(strdateArt1[5]+strdateArt1[6])
-    day1=int(strdateArt1[8]+strdateArt1[9])
-    dateArt1=datetime.datetime(year1,month1,day1)
+    try:
+        fecha1 = artwork1['DateAcquired'].split('-')
+    except:
+        fecha1 = artwork1.split('-')
 
-    strdateArt2= artwork2['DateAcquired']
-    if len(strdateArt2) == 0:
-        return True
-    year2=int(strdateArt2[0]+strdateArt2[1]+strdateArt2[2]+strdateArt2[3])
-    month2=int(strdateArt2[5]+strdateArt2[6])
-    day2=int(strdateArt2[8]+strdateArt2[9])
-    dateArt2=datetime.datetime(year2,month2,day2)
+    fecha2 = artwork2['DateAcquired'].split('-')
 
-    if dateArt1 < dateArt2:
-        return True
-    else:
-        return False 
+    if fecha1 == [""]:
+        fecha1=["3000","00","00"]
+    if fecha2 == [""]:
+        fecha2=["3000","00","00"]
+
+    resultado = True
+
+    if fecha1[0] > fecha2[0]:
+        resultado = False
+    elif fecha1[0] == fecha2[0]:
+        if fecha1[1] > fecha2[1]:
+            resultado = False
+        elif fecha1[1] == fecha2[1]:
+            if fecha1[2] > fecha2[2]:
+                resultado = False
+    
+    return(resultado)
     
 def cmpNacionalidadesPorRanking(pais1, pais2):
 
@@ -408,6 +447,31 @@ def sortArtworksDateAcquired(catalog, anio1, anio2, mes1, mes2, dia1, dia2):
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, num, numPurchase, first3, last3
 
+#Funciones para requerimiento 2 reto 2
+def getObrasEnRangoDeFechas(catalog, fecha1, fecha2):
+    mapa_fechas= catalog['Dates']
+    llaves_fechas= mp.keySet(mapa_fechas)
+    compradas=0
+    obras_en_rango=lt.newList(datastructure= "ARRAY_LIST")
+    for fecha in lt.iterator(llaves_fechas):
+        entrada = mp.get(mapa_fechas, fecha)
+        pos_fecha= me.getValue(entrada)
+        if pos_fecha != None:
+            if (cmpArtworkByDateAcquired(pos_fecha['fecha'],fecha2)) and not (cmpArtworkByDateAcquired(pos_fecha['fecha'],fecha1)):
+                compradas += pos_fecha['comprado']
+                artistas_en_fecha= pos_fecha['artworks']
+                for artwork in lt.iterator(artistas_en_fecha):
+                    lt.addLast(obras_en_rango, artwork)   
+    return obras_en_rango, compradas
+
+def ordenarobras(obras_en_rango):
+    sublista=lt.subList(obras_en_rango,1,lt.size(obras_en_rango))
+    sublista=sublista.copy()
+    start_time = time.process_time()
+    sorted_list = ms.sort(sublista, cmpArtworkByDateAcquired)
+    stop_time = time.process_time()
+    time_ms=(stop_time - start_time)*1000
+    return time_ms, sorted_list
 
 #Funciones para requerimiento 3
 
