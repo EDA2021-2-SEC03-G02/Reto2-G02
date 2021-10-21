@@ -251,15 +251,15 @@ while True:
             elapsed_time_mseg = (stop_time - start_time)*1000
             print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
     elif int(inputs[0]) == 5:
-        opcion = int(input("Porfavor seleccione 1 si desea hacer el procedmimento con TAD lista, o seleccione 2 si desea hacerlo con TAD map"))
-        if opcion == 1:
-            result = controller.ordenarpaises(catalog)
-            print("El tiempo (en mseg) que se demoró el código fue de: ", str(result[0]))
-            printTop10paises(result[1])
-        elif opcion == 2:
-            nacionalidad = input("Por favor indique cual es la nacionalidad de la cual desea conocer la cantidad de obras creadas por artistas de esta nacionalidad: ")
-            size = controller.ObrasPorNacionalidad(catalog, nacionalidad)
-            print("Los artistas con la nacionalidad " + nacionalidad + "crearon un total de " +str(size)+ " obras.")
+        start_time = time.process_time()
+        result = controller.ordenarpaises(catalog)
+        print("\n Para la muestra de elementos, el tiempo es: ", str(result[0]))
+        printTop10paises(result[1])
+
+        stop_time = time.process_time()
+        elapsed_time_mseg = (stop_time - start_time)*1000
+        print ("\ntiempo: "+ str(elapsed_time_mseg))
+        
     elif int(inputs[0]) == 6:
         opcion = int(input("Porfavor seleccione 1 si desea hacer el procedmimento con TAD lista, o seleccione 2 si desea hacerlo con TAD map"))
         if opcion == 1:

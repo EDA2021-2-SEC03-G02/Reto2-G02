@@ -161,9 +161,9 @@ def ObrasPorMedium(catalog, medium):
 def nObrasMasAntiguas(lista, n):
     return model.nObrasMasAntiguas(lista, n)
 
-#lab6
-def ObrasPorNacionalidad(catalog, nacionalidad):
-    return model.ObrasPorNacionalidad(catalog, nacionalidad)
+#lab6 (req 4)
+def ObrasPorNacionalidad(catalog):
+    return model.ObrasPorNacionalidad(catalog)
     
 
 

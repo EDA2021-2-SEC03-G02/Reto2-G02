@@ -678,7 +678,7 @@ def addArtworkNationality(catalog, artwork):
         return None
 
 def newNacion(nationality):
-    dicc = {"nacionalidad": "", "obras": None}
+    dicc = {"nacionalidad": "", "obras": None, "numero_de_obras":0}
     dicc["nacionalidad"] = nationality
     dicc["obras"] = lt.newList('ARRAY_LIST', cmpfunction=compareartworks)
     return dicc
@@ -691,8 +691,20 @@ def ObrasPorNacionalidad(catalog, nacionalidad):
         return size
     return "La nacionalidad no existe"
 
+#función principal req 4 reto 2 
+def getObrasPorNacionalidad(catalog):
+    mapa = catalog['nationalities']
+    llaves = mp.keySet(mapa)
+    lista= lt.newList("ARRAY_LIST")
 
-
+    for nacionalidad in lt.iterator(llaves):
+        entry = mp.get(mapa, nacionalidad)
+        pos_nacionalidad = me.getValue(entry)
+        if pos_nacionalidad != None:
+            lt.addLast(lista, pos_nacionalidad)
+    
+    result = ordenarpaises(lista)
+    return result
     
     
 
