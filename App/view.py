@@ -90,7 +90,6 @@ def printultimas3obrasordenadas(lista):
     pass
 
 def printObrasXMedioArtista(lista):
-    print("Las obras creadas con la téncia más popular del artista son: ")
     for obra in lt.iterator(lista):
         print("Nombre de la obra: " + obra["Title"] + " --- Fecha de creación: " + obra["Date"] + " --- Medio/Técnica: " + obra["Medium"] + " --- Dimensiones: " + obra["Dimensions"])
     pass
@@ -175,8 +174,20 @@ while True:
             elapsed_time_mseg = (stop_time - start_time)*1000
             print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
         elif opcion == 2:
-            print(catalog["BeginDate"])
-
+            year1 = int(input("Por favor elija el año 1, con el que se dará inicio al rango: "))
+            year2 = int(input("Por favor seleccione el año 2, con el que se dará fin al rango: "))
+            start_time = time.process_time()
+            listaArtistas = controller.BeginDateInRange(catalog, year1, year2)
+            primeros3 = controller.ArtistasNacimientoPrimeros3(listaArtistas[0])
+            ultimos3 = controller.ArtistasNacimientoUltimos3(listaArtistas[0])
+            print("La cantidad de artistas nacidos en este rango de años es de: " + str(listaArtistas[1]))
+            print("Los primeros 3 artistas nacidos en este rango de años son: ")
+            printArtistasNacimiento(primeros3)
+            print("Los últimos 3 artistas nacidos en este rango de años son: ")
+            printArtistasNacimiento(ultimos3)
+            stop_time = time.process_time()
+            elapsed_time_mseg = (stop_time - start_time)*1000
+            print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
     elif int(inputs[0])== 3:
         anio1 = int(input("Indique desde que anio desea la muestra: "))
         mes1 = int(input("Indique desde que mes desea la muestra: "))
@@ -212,6 +223,7 @@ while True:
             lista_mega_final = controller.lista_tecnicas_mas_usadas(lista_obras_artista_f, mas_frecuente[0])
             print("El total de medios utilizados por el artista fue de: " + str(mas_frecuente[1]))
             print("La técnica más utlizada por el artista fue: "+str(mas_frecuente[0]))
+            print("Las obras creadas con la técnica más popular del artista son: ")
             printObrasXMedioArtista(lista_mega_final)
             stop_time = time.process_time()
             elapsed_time_mseg = (stop_time - start_time)*1000
@@ -223,14 +235,18 @@ while True:
             print("El artista tuvo un total de " +str(total_tecnicas[1]) + " obras.")
             print("Dentro de las obras del artista, se usaron en total " +str(total_tecnicas[0])+ " técnicas/medios.")
             print("El nombre de la técnica/medio más utilizad@ por el artista es: " + total_tecnicas[2])
-            primeras3 = controller.ArtistasNacimientoPrimeros3(total_tecnicas[3])
-            ultimas3 = controller.ArtistasNacimientoUltimos3(total_tecnicas[3])
-            print("Las primeras 3 obras que usaron la técnica más implementada son: ")
-            printObrasXMedioArtista(primeras3)
-            print("Las últimas 3 obras que usaron la técnica más implementada son: ")
-            printObrasXMedioArtista(ultimas3)
-
-
+            if total_tecnicas[4] <=3:
+                print("Las obras creadas con la técnica más popular del artista son: ")
+                printObrasXMedioArtista(total_tecnicas[3])
+            else:
+                primeras3 = controller.ArtistasNacimientoPrimeros3(total_tecnicas[3])
+                ultimas3 = controller.ArtistasNacimientoUltimos3(total_tecnicas[3])
+                print("Las primeras 3 obras que usaron la técnica más implementada son: ")
+                printObrasXMedioArtista(primeras3)
+                print("Las últimas 3 obras que usaron la técnica más implementada son: ")
+                printObrasXMedioArtista(ultimas3)
+            elapsed_time_mseg = (stop_time - start_time)*1000
+            print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
     elif int(inputs[0]) == 5:
         opcion = int(input("Porfavor seleccione 1 si desea hacer el procedmimento con TAD lista, o seleccione 2 si desea hacerlo con TAD map"))
         if opcion == 1:
@@ -242,27 +258,51 @@ while True:
             size = controller.ObrasPorNacionalidad(catalog, nacionalidad)
             print("Los artistas con la nacionalidad " + nacionalidad + "crearon un total de " +str(size)+ " obras.")
     elif int(inputs[0]) == 6:
-        departamento = input("Seleccione el Departamento del cual desea saber su costo total de envío")
-        start_time = time.process_time()
-        ListaPorDepto = controller.ListaPorDepto(catalog, departamento)
-        lista = ListaPorDepto[0]
-        tamañoDepto = ListaPorDepto[1]
-        print("El total de obras a transportar es de: " + str(tamañoDepto))
-        resultado = controller.CostoTodasObras(lista)
-        costo_total = resultado[0]
-        peso_total = resultado[1]
-        print("El costo total aproximado para el envío del departamento es de: " +str(costo_total)+ " USD.")
-        print("EL peso total del departamento es de: " +str(peso_total)+ " Kg.")
-        top5Antiguas = controller.ObrasMasAntiguas(lista)
-        top5Caras = controller.ObrasMasCaras(resultado[2])
-        print("Las 5 obras más costosas del Departamento son: ")
-        printObrasConCostos(top5Caras, catalog)
-        print("-----------------------------------------------")
-        print("Las 5 obras más antiguas son: ")
-        printObrasConCostos(top5Antiguas, catalog)
-        stop_time = time.process_time()
-        elapsed_time_mseg = (stop_time - start_time)*1000
-        print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
+        opcion = int(input("Porfavor seleccione 1 si desea hacer el procedmimento con TAD lista, o seleccione 2 si desea hacerlo con TAD map"))
+        if opcion == 1:
+            departamento = input("Seleccione el Departamento del cual desea saber su costo total de envío")
+            start_time = time.process_time()
+            ListaPorDepto = controller.ListaPorDepto(catalog, departamento)
+            lista = ListaPorDepto[0]
+            tamañoDepto = ListaPorDepto[1]
+            print("El total de obras a transportar es de: " + str(tamañoDepto))
+            resultado = controller.CostoTodasObras(lista)
+            costo_total = resultado[0]
+            peso_total = resultado[1]
+            print("El costo total aproximado para el envío del departamento es de: " +str(costo_total)+ " USD.")
+            print("EL peso total del departamento es de: " +str(peso_total)+ " Kg.")
+            top5Antiguas = controller.ObrasMasAntiguas(lista)
+            top5Caras = controller.ObrasMasCaras(resultado[2])
+            print("Las 5 obras más costosas del Departamento son: ")
+            printObrasConCostos(top5Caras, catalog)
+            print("-----------------------------------------------")
+            print("Las 5 obras más antiguas son: ")
+            printObrasConCostos(top5Antiguas, catalog)
+            stop_time = time.process_time()
+            elapsed_time_mseg = (stop_time - start_time)*1000
+            print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
+        elif opcion == 2:
+            departamento = input("Seleccione el Departamento del cual desea saber su costo total de envío")
+            start_time = time.process_time()
+            ListaPorDepto = controller.ListaDelDeptoMAP(catalog, departamento)
+            lista = ListaPorDepto[0]            
+            tamañoDepto = ListaPorDepto[1]
+            resultado = controller.CostoTodasObras(lista)
+            costo_total = resultado[0]
+            peso_total = resultado[1]
+            print("El costo total aproximado para el envío del departamento es de: " +str(costo_total)+ " USD.")
+            print("EL peso total del departamento es de: " +str(peso_total)+ " Kg.")
+            top5Antiguas = controller.ObrasMasAntiguas(lista)
+            top5Caras = controller.ObrasMasCaras(resultado[2])
+            print("Las 5 obras más costosas del Departamento son: ")
+            printObrasConCostos(top5Caras, catalog)
+            print("-----------------------------------------------")
+            print("Las 5 obras más antiguas son: ")
+            printObrasConCostos(top5Antiguas, catalog)
+            print("El total de obras a transportar es de: " + str(tamañoDepto))
+            stop_time = time.process_time()
+            elapsed_time_mseg = (stop_time - start_time)*1000
+            print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
     elif int(inputs[0] )== 7:
         medium = input("Indique que medio desear conocer: ")
         n = int(input("Digite la cantidad de obras más antiguas que desea conocer: "))

@@ -63,15 +63,16 @@ def newCatalog():
     """
     catalog = {'artists': None,
                'artworks': None,
-               'nacionalidades': None, 
-               "Medium": None,
-               "ConstituentID": None,
-               "artistMAP": None,
-               "DisplayName": None,
-               "BeginDate": None,
-               "NationalityArtist": None, 
-               "NationalityArtworks": None}
-               
+               'nacionalidades': None,
+              "Medium": None,
+              "ConstituentID": None, 
+              "artistMAP": None, 
+              "DisplayName": None, 
+              "BeginDate": None, 
+              "NationalityArtist": None, 
+              "NationalityArtworks": None, 
+              "Department": None}
+
     TipoDeLista= input('¿Cómo desea guardar el catálogo del museo?(ll = Linked_list, al = Array_List))  ')
     if TipoDeLista == 'll':
         catalog['artists'] = lt.newList('SINGLE_LINKED', cmpfunction=compareartist)
@@ -104,16 +105,23 @@ def newCatalog():
                                    maptype='PROBING',
                                    loadfactor=0.5,
                                    comparefunction=compareartworksConstituentIDMAP)
+    catalog["Department"] = mp.newMap(10000,
+                                   maptype='CHAINING',
+                                   loadfactor=4.0,
+                                   comparefunction=compareartworksConstituentIDMAP)
+    
     return catalog
 
 
 def addArtwork(catalog, artwork):
     # Se adiciona el libro a la lista de libros
     lt.addLast(catalog['artworks'], artwork)
-    #AddNacionalidadesObras(catalog, artwork)
+    AddNacionalidadesObras(catalog, artwork)
     addArtworkMedium(catalog, artwork)
-   #addArtworkConstituentID(catalog, artwork)
+    addArtworkConstituentID(catalog, artwork)
     addArtworkNationality(catalog, artwork)
+    addArtworkDepartment(catalog, artwork)
+    #Prueba de que guarda
 
 
 def addArtist(catalog, artist):
@@ -121,7 +129,7 @@ def addArtist(catalog, artist):
     mp.put(catalog["DisplayName"], artist["DisplayName"], artist["ConstituentID"])
     if artist["Nationality"] != "" and artist["Nationality"] != " ":
         mp.put(catalog["NationalityArtist"], artist["ConstituentID"], artist["Nationality"])
-    #addArtistBeginDate(catalog, artist)
+    addArtistBeginDate(catalog, artist)
 
 def getLast3Artists(catalog):
     artists = catalog['artists']
@@ -133,6 +141,27 @@ def lastThreeArtworks(catalog):
     artworks = catalog['artworks']
     sublista = lt.subList(artworks, (len(artworks))-3, 3)
     return sublista
+
+def addArtworkDepartment(catalog, artwork):
+    try:
+        deptos = catalog["Department"]
+        depto = artwork["Department"]
+        existDepto = mp.contains(deptos, depto)
+        if existDepto:
+            entry = mp.get(deptos, depto)
+            dicc_depto = me.getValue(entry)
+        else:
+            dicc_depto = newDepto(depto)
+            mp.put(deptos, depto, dicc_depto)
+        lt.addLast(dicc_depto["obras"], artwork)
+    except Exception:
+        return None
+
+def newDepto(depto):
+    dicc = {"depto":"", "obras": None}
+    dicc["depto"] = depto
+    dicc["obras"] = lt.newList('ARRAY_LIST', cmpfunction=compareartist)
+    return dicc
 
 
 def addArtistBeginDate(catalog, artist):
@@ -297,6 +326,14 @@ def compareArtistsYearBorn(artist1, artist2):
         return 1
     else:
         return 0
+def compareArtistsYearBornSimple(year1, year2):
+    a = int(year1)
+    b = int(year2)
+    if a < b:
+        return 1
+    else:
+        return 0
+
 def compareCosto(artist1, artist2):
     a = int(artist1["costo"])
     b = int(artist2["costo"])
@@ -482,7 +519,8 @@ def total_tecnicasMAP(lista):
             mayor = key
     lista_final = mp.get(mapa, mayor)
     lista_final1 = me.getValue(lista_final)["obras"]
-    return tamaño, size, mayor, lista_final1
+    tamanio = lt.size(lista_final1)
+    return tamaño, size, mayor, lista_final1, tamanio
 
 
 
@@ -615,9 +653,38 @@ def ArtistasNacimientoPrimeros3(lista):
     return sublista
 
 def ArtistasNacimientoUltimos3(lista):
-    sublista = lt.subList(lista, lt.size(lista)-3, 3)
+    sublista = lt.subList(lista, lt.size(lista)-2, 3)
     return sublista
-    
+
+#Req 1 Reto 2
+def addArtistBeginDate(catalog, artist):
+    try:
+        dates = catalog["BeginDate"]
+        if artist["BeginDate"] != "" and artist["BeginDate"] != "":
+            fecha = artist["BeginDate"]
+            existFecha = mp.contains(dates, fecha)
+            if existFecha:
+                entry = mp.get(dates, fecha)
+                dicc_fecha = me.getValue(entry)
+            else:
+                dicc_fecha = newFecha(fecha)
+                mp.put(dates, fecha, dicc_fecha)
+            lt.addLast(dicc_fecha["artistas"], artist)
+    except Exception:
+        return None
+
+def BeginDateInRange(catalog, year1, year2):
+    lista_fechas = mp.keySet(catalog["BeginDate"])
+    fechas_ordenadas = ms.sort(lista_fechas, compareArtistsYearBornSimple)
+    sublist = lt.newList(cmpfunction=compareartist)
+    for fecha in lt.iterator(fechas_ordenadas):
+        if fecha != "0" and fecha != 0:
+            if int(fecha)>=year1 and int(fecha)<=year2:
+                entry = mp.get(catalog["BeginDate"], fecha)
+                lista_artistas = me.getValue(entry)["artistas"] 
+                for artista in lt.iterator(lista_artistas):
+                    lt.addLast(sublist, artista)
+    return sublist, lt.size(sublist)    
 # Req 3 Reto 2
 
 def sublistaRangoArtistasMAP(catalog, year1, year2):
@@ -771,7 +838,11 @@ def ArtistaEnObra(catalog, obra):
                 nombres += "(" + nombre +")"
     return nombres
 
-
+#Req 5 Reto2
+def ListaDelDeptoMAP(catalog, depto):
+    entry = mp.get(catalog["Department"], depto)
+    lista = me.getValue(entry)["obras"]
+    return lista, lt.size(lista)
 
 #Lab 5
 
