@@ -63,8 +63,15 @@ def newCatalog():
     """
     catalog = {'artists': None,
                'artworks': None,
-               'nacionalidades': None, "Medium": None, "ConstituentID": None, "artistMAP": None, "DisplayName": None, "BeginDate": None, "NationalityArtist": None, "NationalityArtworks": None}
-
+               'nacionalidades': None, 
+               "Medium": None,
+               "ConstituentID": None,
+               "artistMAP": None,
+               "DisplayName": None,
+               "BeginDate": None,
+               "NationalityArtist": None, 
+               "NationalityArtworks": None}
+               
     TipoDeLista= input('¿Cómo desea guardar el catálogo del museo?(ll = Linked_list, al = Array_List))  ')
     if TipoDeLista == 'll':
         catalog['artists'] = lt.newList('SINGLE_LINKED', cmpfunction=compareartist)
@@ -74,28 +81,28 @@ def newCatalog():
         catalog['artworks'] = lt.newList('ARRAY_LIST', cmpfunction=compareartworks)
     catalog['nacionalidades']=lt.newList('ARRAY_LIST')
     catalog['Medium'] = mp.newMap(10000,
-                                   maptype='CHAINING',
-                                   loadfactor=4.0,
+                                   maptype='PROBING',
+                                   loadfactor=0.5,
                                    comparefunction=compareartworksmediumMAP)
     catalog["ConstituentID"] = mp.newMap(10000,
-                                   maptype='CHAINING',
-                                   loadfactor=4.0,
+                                   maptype='PROBING',
+                                   loadfactor=0.5,
                                    comparefunction=compareartworksConstituentIDMAP)
     catalog["DisplayName"] = mp.newMap(10000,
-                                   maptype='CHAINING',
-                                   loadfactor=4.0,
+                                   maptype='PROBING',
+                                   loadfactor=0.5,
                                    comparefunction=compareartistMAP)
     catalog["BeginDate"] = mp.newMap(10000,
-                                   maptype='CHAINING',
-                                   loadfactor=4.0,
+                                   maptype='PROBING',
+                                   loadfactor=0.5,
                                    comparefunction=compareartistMAP)
     catalog["NationalityArtist"] = mp.newMap(10000,
-                                   maptype='CHAINING',
-                                   loadfactor=4.0,
+                                   maptype='PROBING',
+                                   loadfactor=0.5,
                                    comparefunction=compareartistMAP)
     catalog["NationalityArtworks"] = mp.newMap(10000,
-                                   maptype='CHAINING',
-                                   loadfactor=4.0,
+                                   maptype='PROBING',
+                                   loadfactor=0.5,
                                    comparefunction=compareartworksConstituentIDMAP)
     return catalog
 
