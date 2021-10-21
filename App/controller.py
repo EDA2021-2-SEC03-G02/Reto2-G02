@@ -162,8 +162,8 @@ def nObrasMasAntiguas(lista, n):
     return model.nObrasMasAntiguas(lista, n)
 
 #lab6 (req 4)
-def ObrasPorNacionalidad(catalog):
-    return model.ObrasPorNacionalidad(catalog)
+def getObrasPorNacionalidad(catalog):
+    return model.getObrasPorNacionalidad(catalog)
     
 
 

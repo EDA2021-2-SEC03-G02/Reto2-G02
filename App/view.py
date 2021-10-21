@@ -117,11 +117,11 @@ def printTop10paises(paises):
     print('Las 10 procedencias de obras más comunes en el MoMa son: ')
 
     for nacionalidad in lt.iterator(paises):
-        print("\n" + nacionalidad['Pais'] + " | " + str(nacionalidad['NumeroDeObras']))
+        print("\n" + nacionalidad['nacionalidad'] + " | " + str(nacionalidad['numero_de_obras']))
         print("\n---------------")
     pais = lt.getElement(paises, 1)
-    print("las primera obra del país con más obras ("+ pais['Pais'] +") en el MoMa son: ")
-    obra=lt.getElement(pais['Obra'],1)
+    print("las primera obra del país con más obras ("+ pais['nacionalidad'] +") en el MoMa son: ")
+    obra=lt.getElement(pais['obras'],1)
     titulo=obra['Title']
     artista=obra['ConstituentID']
     fecha=obra['Date']
@@ -252,7 +252,7 @@ while True:
             print("El tiempo (en mseg) que se demoró el código fue de: " +str(elapsed_time_mseg))
     elif int(inputs[0]) == 5:
         start_time = time.process_time()
-        result = controller.ordenarpaises(catalog)
+        result = controller.getObrasPorNacionalidad(catalog)
         print("\n Para la muestra de elementos, el tiempo es: ", str(result[0]))
         printTop10paises(result[1])
 

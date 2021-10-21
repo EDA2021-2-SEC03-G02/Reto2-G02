@@ -287,7 +287,7 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     
 def cmpNacionalidadesPorRanking(pais1, pais2):
 
-    result = pais1['NumeroDeObras'] > pais2['NumeroDeObras']
+    result = pais1['numero_de_obras'] > pais2['numero_de_obras']
     return result
 
 
@@ -664,6 +664,8 @@ def addArtworkNationality(catalog, artwork):
         for numero in lista:
             entry = mp.get(catalog["NationalityArtist"], numero)
             nationality = me.getValue(entry)
+            if (nationality == ''):
+                nationality = 'Nationality unknown'
             existArtwork = mp.contains(mapa, nationality)
             if existArtwork:
                 entry1 = mp.get(mapa, nationality)
@@ -671,9 +673,8 @@ def addArtworkNationality(catalog, artwork):
             else:
                 dicc_nacion = newNacion(nationality)
                 mp.put(mapa, nationality, dicc_nacion)
-            #print("AAAAAA")
             lt.addLast(dicc_nacion["obras"], artwork)
-            #print("BBBBBB")
+            dicc_nacion['numero_de_obras'] +=1
     except Exception:
         return None
 
@@ -693,7 +694,7 @@ def ObrasPorNacionalidad(catalog, nacionalidad):
 
 #función principal req 4 reto 2 
 def getObrasPorNacionalidad(catalog):
-    mapa = catalog['nationalities']
+    mapa = catalog['NationalityArtworks']
     llaves = mp.keySet(mapa)
     lista= lt.newList("ARRAY_LIST")
 
